@@ -15,7 +15,7 @@ You can do one of the following to obtain the latest code package.
 ```git clone https://github.com/multi-cd/multi-cd-matlab.git```
 
 To run the code, you need Matlab with the Statistics toolbox.
-Code was developed in Matlab R2016b, but we believe it should run in earlier releases of Matlab. Please feel free to let us know if you encounter any problem.
+Code was developed in Matlab R2016b, but we believe it should run in earlier releases of Matlab, as well. Please feel free to let us know if you encounter any problem.
 
 
 ## Documentation
@@ -28,8 +28,9 @@ We provide two example scripts to demonstrate how Multi-CD can be applied, with 
 `demo1_prepCorr_HiC.m` - demonstrates the pre-processing, going from the Hi-C matrix to the correlation matrix.
 
 - Data files are not included in this repository. You need to provide the original Hi-C data yourself to run this script -- we are sorry for this inconvenience.
-Hi-C datasets can be easily downloaded from the public databases; for example, we obtained ours from [Rao et al, (2014) on GEO](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63525).
-Alternatively, you can input your own Hi-C data matrix.
+Hi-C datasets can be easily downloaded from the public databases; 
+alternatively, you can input your own Hi-C data matrix.
+
 
 ### Identification of domain solutions (Multi-CD)
 
