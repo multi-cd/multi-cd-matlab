@@ -10,7 +10,7 @@ The code is intended to accompany a manuscript under review. The link to the ref
 
 **Software Requirements:**
 To run the package, you need Matlab with the Statistics toolbox.
-Code was developed in Matlab R2016b, on a Mac OS X 10.12. 
+Code was tested in Matlab versions R2016b-R2017b, on Mac OS (OSX 10.12) and Linux (Centos 7). 
 We tried to use basic Matlab functionalities whenever possible, so that the code could be used in other versions of Matlab.
 Please feel free to let us know if you encounter any problem in other versions of Matlab.
 
