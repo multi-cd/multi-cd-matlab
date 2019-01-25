@@ -6,24 +6,55 @@ Matlab code for a flexible algorithm to determine chromosome domains solutions t
 
 The code is intended to accompany a manuscript under review. The link to the reference paper will be added later, as well as a supplementary material with details of the algorithm. For inquiries in the meantime, please send an email to Ji Hyun Bak (jhbak@kias.re.kr).
 
-## Installation
+## System Requirements
+
+**Software Requirements:**
+To run the package, you need Matlab with the Statistics toolbox.
+Code was developed in Matlab R2016b, on a Mac OS X 10.12. 
+We tried to use basic Matlab functionalities whenever possible, so that the code could be used in other versions of Matlab.
+Please feel free to let us know if you encounter any problem in other versions of Matlab.
+
+**Hardware Requirements:**
+The package requires only a standard computer, with enough RAM to support the handling of the data matrix.
+
+
+## Installation Guide
 
 You can do one of the following to obtain the latest code package.
+This is a lightweight package, so download should be quick in normal internet conditions. 
 
 * **Download**: click to download a zipped archive  [multi-cd-matlab-master.zip](https://github.com/multi-cd/multi-cd-matlab/archive/master.zip)
 * **Clone**: clone the repository by typing this to the command line: 
 ```git clone https://github.com/multi-cd/multi-cd-matlab.git```
 
-To run the code, you need Matlab with the Statistics toolbox.
-Code was developed in Matlab R2016b, but we believe it should run in earlier releases of Matlab, as well. Please feel free to let us know if you encounter any problem.
+
+To run the provided scripts, set your Matlab's working directory to the location where you downloaded this code package (the directory where the demo scripts are in). 
+You can do this by typing 
+
+```
+cd [your-path]/multi-cd-matlab
+```
+
+on the Matlab command line. The relative path to the rest of the code is automatically set in each demo script, by calling `setpaths.m` in the beginning.
 
 
-## Documentation
+## Instructions for Use
 
 We provide two example scripts to demonstrate how Multi-CD can be applied, with step-by-step tutorials.
+Simply open a demo script in Matlab and run; preferably, run by sections to see the intermediate outcome of each step.
+Example output plots from the demo scripts are included under [Data](Data).
+
+All custom functions (that do the real job) are in the [Code](Code) folder.
+If you find a function call in the demo and want to see a quick documentation of what it does, you can type 
+
+```
+help [function-name]
+```
+
+on the Matlab command line. For example, `help HS_calculation_all`. Note that `setpaths.m` should have been run in advance, if not already called in the beginning of the demo script.
 
 
-### Pre-processing (Hi-C to correlation matrix)
+### demo1: Pre-processing (Hi-C to correlation matrix)
 
 `demo1_prepCorr_HiC.m` - demonstrates the pre-processing, going from the Hi-C matrix to the correlation matrix.
 
@@ -32,7 +63,7 @@ Hi-C datasets can be easily downloaded from the public databases;
 alternatively, you can input your own Hi-C data matrix.
 
 
-### Identification of domain solutions (Multi-CD)
+### demo2: Identification of domain solutions (Multi-CD)
 
 `demo2_MultiCD.m` - demonstrates how Multi-CD works at a fixed lambda (which can be changed by user), by showing each step of the simulated annealing process.
 
