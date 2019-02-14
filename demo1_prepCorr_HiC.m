@@ -183,8 +183,7 @@ Yinteg = [0;cumsum(ymid*dt)]; % integrate using rectangle method
 % === invert to get G from P
 
 % prepare a non-redundant list of contact probability values
-P_list = unique(Pmat(:));
-P_list(isnan(P_list))=[]; % remove NaNs
+[P_list,~,ic] = unique(Pmat(:));
 
 % invert P to the auxiliary variable t using a simple table search
 t_list = table_search_YtoT(P_list,Yinteg,tgrid);
@@ -194,18 +193,10 @@ G_list = (t_list./r_cutoff).^2;
 
 disp('inverted by table search. rearranging in matrix form...');
 
-% rearrange back in matrix form
-% (*Author TODO: this could be made faster by keeping indices from unique.)
-Gmat = zeros(N);
-for i=1:N-1
-    for j=i+1:N
-        % fill the upper triangular part
-        if ~isnan(Pmat(i,j))
-            Gmat(i,j)=G_list(P_list==Pmat(i,j));
-        end
-    end
-end
-Gmat = Gmat + Gmat'; % a symmetric matrix
+% rearrange back in matrix form (2/14/2019 update, with speedup)
+Gmat_vectorized = G_list(ic); % map back using stored index correspondence
+Gmat_vectorized(isnan(G_list)) = 0; % fill diagonals with 0's
+Gmat = reshape(Gmat_vectorized,[N,N]); % rearrange to a matrix
 
 disp('done.');
 
