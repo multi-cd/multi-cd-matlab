@@ -47,22 +47,34 @@ disp('=== Hi-C matrix M ===');
 
 % ===== check input HiC data 
 
-% should be a non-negative and symmetric matrix
-if(any(HiC_input<0))
-    error('input Hi-C should be non-negative.');
-elseif(~isequal(HiC_input,HiC_input'))
-    error('input Hi-C should be a symmetric matrix.');
-end
-
-disp('input Hi-C format OK.');
-disp(['size of input matrix: ',num2str(size(HiC_input,1))]);
-
-% ===== simple treatment
-
 % remove all NaNs (replace with 0's)
 idx_nan = sum(~isnan(HiC_input),2)==0; 
 HiC_full = HiC_input(~idx_nan,~idx_nan);
 HiC_full(isnan(HiC_full))=0;
+
+% should be a non-negative matrix
+if(any(HiC_full<0))
+    error('input Hi-C should be non-negative.');
+end
+
+% should be either a symmetric matrix, or a triangular matrix
+if(~isequal(HiC_full,HiC_full'))
+    % try to symmetrize
+    uppertri = triu(HiC_full,1); % above diagonal
+    lowertri = tril(HiC_full,-1); % below diagonal
+    if(~any(uppertri(:)>0))
+        HiC_full = HiC_full + lowertri';
+    elseif(~any(lowertri(:)>0))
+        HiC_full = HiC_full + uppertri';
+    else
+        error('input Hi-C should be a symmetric matrix, or only contain upper/lower triangular elements.');
+    end
+end
+
+disp('input Hi-C format OK.');
+disp(['size of input matrix: ',num2str(size(HiC_full,1))]);
+
+% ===== simple treatment
 
 % remove empty rows/columns
 idx_empty = all(HiC_full==0,2);
