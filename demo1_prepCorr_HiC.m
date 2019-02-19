@@ -231,7 +231,7 @@ end
 
 % get the correlation matrix C
 Cmat = 1 - gfix./Gmat; % by normalizing G
-Cmat = Cmat + Cmat'; % make symmetric 
+% Cmat = Cmat + Cmat'; % (bug fix 2/19/2019: already symmetric)
 Cmat(logical(eye(N))) = 1; % fix diagonal (self-correlation)
 
 % apply lower cutoff at -1
