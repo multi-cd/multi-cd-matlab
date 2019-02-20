@@ -255,5 +255,5 @@ drawnow;
 % === to use as Multi-CD input
 
 % outfilename = 'Data/Cmat_test.mat';
-% save(outfilename,Cmat);
+% save(outfilename,'Cmat');
 
