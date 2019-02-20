@@ -50,6 +50,10 @@ for k = 1:Kmax % for each cluster
     ck = sum(Cmat_sub(:)); % sum of correlation matrix elements in cluster
     nk = sum(ix); % number of elements (size of cluster)
     
+    if(ck>nk^2)
+        error('sum of submatrix elements in C exceeds its # elements.');
+    end
+    
     if(nk<=1)
         Hk = 0;
     elseif(ck == nk^2) % in case of all elements just "1"

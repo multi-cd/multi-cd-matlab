@@ -234,6 +234,11 @@ Cmat = 1 - gfix./Gmat; % by normalizing G
 % Cmat = Cmat + Cmat'; % (bug fix 2/19/2019: already symmetric)
 Cmat(logical(eye(N))) = 1; % fix diagonal (self-correlation)
 
+% check if upper bounded at 1
+if(max(Cmat(:))>1)
+    error('elements of the C matrix should not exceed 1.');
+end
+
 % apply lower cutoff at -1
 idx_lowC = (Cmat(:)<-1); % long tail due to finite # measurements in Hi-C
 Cmat(idx_lowC)=-1; % cutoff to -1; this is still a strong anticorrelation
