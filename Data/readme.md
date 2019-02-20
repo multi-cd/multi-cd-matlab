@@ -21,7 +21,8 @@ Each tarball contains multiple subdirectories (see their readme file provided on
 
 ### Data Formatting (_pre_-pre-processing)
 
-The input Hi-C data for `demo1` should be passed in a MAT file, that contains a symmetric matrix with non-negative entries. There can be NaN entries, but they will be replaced by zeros. The matrix can have empty rows/columns, with all zeros, but they will be removed during the pre-processing. 
+The input Hi-C data for `demo1` should be passed in a MAT file, that contains a symmetric matrix with non-negative entries. Upper or lower triangular matrices are allowed, which will be symmetrized by the script. 
+There can be NaN entries, but they will be replaced by zeros. The matrix can have empty rows/columns, with all zeros, but they will be removed during the pre-processing. 
 
 Some simple formatting may be necessary, depending on how the original data is stored. For example, if you downloaded the Rao et al. (2014) dataset following the directions above, you need to:
 
