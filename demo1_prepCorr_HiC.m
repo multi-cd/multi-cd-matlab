@@ -37,7 +37,8 @@ end
 % ========================================================================
 
 disp(' ');
-disp('input data loaded.');
+disp('input data loaded:');
+disp(inputfilename);
 
 
 %% prepare the Hi-C matrix M
@@ -46,6 +47,15 @@ disp(' ');
 disp('=== Hi-C matrix M ===');
 
 % ===== check input HiC data 
+
+disp('format check...');
+
+if(~isnumeric(HiC_input))
+    error('input Hi-C should be a numeric array.');
+end
+if(~isequal(size(HiC_input),size(HiC_input,1)*[1 1]))
+    error('input Hi-C should be a square matrix.');
+end
 
 % remove all NaNs (replace with 0's)
 idx_nan = sum(~isnan(HiC_input),2)==0; 
@@ -57,22 +67,45 @@ if(any(HiC_full<0))
     error('input Hi-C should be non-negative.');
 end
 
-% should be either a symmetric matrix, or a triangular matrix
-if(~isequal(HiC_full,HiC_full'))
-    % try to symmetrize
-    uppertri = triu(HiC_full,1); % above diagonal
-    lowertri = tril(HiC_full,-1); % below diagonal
-    if(~any(uppertri(:)>0))
-        HiC_full = HiC_full + lowertri';
-    elseif(~any(lowertri(:)>0))
-        HiC_full = HiC_full + uppertri';
+% make sure we have a symmetric matrix
+
+uppertri = triu(HiC_full,1); % upper triangular matrix, excluding diagonal
+lowertri = tril(HiC_full,-1); % lower triangular matrix, excluding diagonal
+
+if(~any(uppertri(:)>0) || ~any(lowertri(:)>0))
+    % input is a triangular matrix
+    HiC_full = HiC_full + HiC_full'; % symmetrize by adding the other part
+    disp(' - detected a triangular matrix. symmetrized by adding.');
+    % NOTE: we do not care about the diagonal here,
+    % because the diagonal of the M matrix will be removed below.
+    
+else
+    % there are values on both triangular parts
+    if(isequal(HiC_full,HiC_full'))
+        % already symmetric - great!
     else
-        error('input Hi-C should be a symmetric matrix, or only contain upper/lower triangular elements.');
+        HiC_full = (HiC_full + HiC_full')/2; % force-symmetrize
+        disp(' - detected a non-triangular matrix.');
+        disp(' ');
+        disp(' *********************************************************');
+        disp(' CAUTION:                                                 ');
+        disp(' the input matrix does not appear to be symmetric. it may ');
+        disp(' simply be a precision problem, but it might indicate an  ');
+        disp(' error in the input matrix preparation.                   ');
+        disp(' *********************************************************');
+        disp(' *** we recommend the user to double-check input data! ***');
+        disp(' *********************************************************');
+        disp(' '); 
+        disp(' - force-symmetrized by averaging.');
+        % CAVEAT: this script does not check whether this is a sensible
+        % symmetrization! User should make sure that input is correct.
     end
 end
 
 disp('input Hi-C format OK.');
 disp(['size of input matrix: ',num2str(size(HiC_full,1))]);
+
+
 
 % ===== simple treatment
 
