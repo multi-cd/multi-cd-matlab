@@ -1,0 +1,9 @@
+## data files
+*.mat
+*.dat
+
+## folders with reserved names
+archive
+untracked
+
+
