@@ -50,7 +50,7 @@ else
     % myTmax = Inf;
     myTmax = max(Tgrid); 
 end
-Tsol(Ytarget>max(Ygrid)) = myTmax;
+Tsol(Ytarget>=max(Ygrid)) = myTmax;   % bug fix 2/21/2019 (replaced > with >=)
 
 end
 
