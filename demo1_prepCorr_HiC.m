@@ -190,7 +190,7 @@ disp('=== inverse square distance scales G ===');
 % from 0 to r_cutoff, with the elements of G (gamma) in the integrand.
 % Here we change the variable of integration such that:
 % 
-% t = gamma * r^2
+% t^2 = gamma * r^2
 % 
 % which is a dimensionless parameter.
 
@@ -201,7 +201,7 @@ r_cutoff = 1; % distance cutoff for inter-loci contact
 % === prepare an inversion table
 
 % the integrand
-myfun = @(t) sqrt(2/pi)*(t.^2).*exp(-(1/2)*t.^2);
+myfun = @(t) 4/sqrt(pi)*(t.^2).*exp(-t.^2);
 
 % set up t grid
 dt = 0.05;
