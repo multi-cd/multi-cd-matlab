@@ -8,7 +8,7 @@
 % - Output: CD solution (s), as a vector of domain indices
 % ------------------------------------------------------------------------
 
-% Copyright 2018 Min Hyeok Kim & Ji Hyun Bak
+% Copyright 2018-2020 Min Hyeok Kim & Ji Hyun Bak
 
 
 %% initialize 
@@ -188,16 +188,16 @@ end
 disp('done.');
 
 
-%% Zero temperature sampling (Gradient descent method) 
+%% Final quenching by gradient descent
 
 disp(' ');
-disp('=== Zero Temperature Quenching ===');
+disp('=== Final Quenching ===');
 
 % quench options
 quenchOptions = [];
 quenchOptions.cnt_acp_limit = 1e5;
 
-% zero temperature quenching
+% zero temperature quenching (gradient descent)
 [s_set,HS,HS_list,term_status] = runQuench_zeroT(costfun,s_set,quenchOptions);
 if(term_status==1)
     disp(' - bad sign: descending too far. trial limit reached.');

@@ -1,15 +1,15 @@
 % demo1_prepCorr_HiC.m
 % 
-% Demo script for the pre-processing of Hi-C data (M),
+% Demo script for the pre-processing of normalized Hi-C data (M),
 % which is first translated to the contact probability (P), 
 % then to the auxiliary matrix of inverse distance scales (G) and 
 % finally to the correlation matrix (C) to be used for Multi-CD.
 % 
-% - Input: Hi-C matrix M
+% - Input: normalized Hi-C matrix M
 % - Output: correlation matrix C
 % ------------------------------------------------------------------------
 
-% Copyright 2018 Min Hyeok Kim & Ji Hyun Bak
+% Copyright 2018-2020 Min Hyeok Kim & Ji Hyun Bak
 
 
 %% initialize 
@@ -19,13 +19,15 @@ clear;close all;clc;
 setpaths; % add path to custom functions
 
 
-%% load Hi-C data
+%% load normalized Hi-C data
 
 disp('Pre-processing for Multi-CD');
 
 % ========================================================================
 % DATA INPUT:
-% replace with the path to your own Hi-C data, and load as HiC_input.
+% replace with the path to your own data, and load as HiC_input.
+% we assume that this is the *normalized* Hi-C with uniform row-sums.
+% (use, for example, the Knight-Ruiz algorithm for normalization)
 % ------------------------------------------------------------------------
 inputfilename = 'Data/HiC_test.mat';
 if(exist(inputfilename,'file'))
@@ -41,10 +43,10 @@ disp('input data loaded:');
 disp(inputfilename);
 
 
-%% prepare the Hi-C matrix M
+%% prepare the normalized Hi-C matrix M
 
 disp(' ');
-disp('=== Hi-C matrix M ===');
+disp('=== normalized Hi-C matrix M ===');
 
 % ===== check input HiC data 
 
@@ -255,7 +257,7 @@ disp('=== correlation matrix C ===');
 % determine the normalizer
 idx_lowertri = logical(tril(ones(N))-eye(N)); % lower triangular part, minus diagonal
 gfix = median(Gmat(idx_lowertri)); % we used median (not the unique choice)
-% note: this gfix corresponds to 1/(2*sigma_c) in the manuscript
+% note: this gfix corresponds to 1/(4*sigma_c) in the manuscript
 
 % fix occasional cases where median is zero (when Hi-C is sparse)
 if(gfix==0) 
@@ -264,7 +266,6 @@ end
 
 % get the correlation matrix C
 Cmat = 1 - gfix./Gmat; % by normalizing G
-% Cmat = Cmat + Cmat'; % (bug fix 2/19/2019: already symmetric)
 Cmat(logical(eye(N))) = 1; % fix diagonal (self-correlation)
 
 % check if upper bounded at 1
