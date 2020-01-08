@@ -27,7 +27,8 @@ There can be NaN entries, but they will be replaced by zeros. The matrix can hav
 Some simple formatting may be necessary, depending on how the original data is stored. For example, if you downloaded the Rao et al. (2014) dataset following the directions above, you need to:
 
 - Re-arrange the Hi-C count vector (third column in the "RAWobserved" file) into a symmetric square matrix. 
-- Perform Knight-Ruiz normalization using the provided normalization vector in their "KRnorm" file.
+- Normalize the Hi-C matrix such that the row-sums are uniform, for example using the Knight-Ruiz algorithm. 
+    (If you are using Rao et al. (2014) dataset, a pre-computed normalization vector is provided as their "KRnorm" file. Note that they chose to fix the row-sums to the average row-sum of the original Hi-C matrix, rather than 1 which is more typical.)
 
 See [Rao et al.'s readme file](https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE63525&format=file&file=GSE63525%5FGM12878%5Fprimary%5FREADME%2Ertf) for documentations on the data formats.
 
