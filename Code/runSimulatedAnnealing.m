@@ -1,6 +1,10 @@
 function [s_set, HS, more_output] = runSimulatedAnnealing(costfun, N, opts)
-    % Function to run simulated annealing at fixed lambda.
+    % runSimulatedAnnealing: Runs simulated annealing at fixed lambda.
     % See demo2_MultiCD.m for a step-by-step demonstration.
+    % --------------------------------------------------------------------
+    
+    % Copyright 2018-2020 Min Hyeok Kim & Ji Hyun Bak
+    
     
     % === unpack options
     
@@ -50,6 +54,9 @@ function [s_set, HS, more_output] = runSimulatedAnnealing(costfun, N, opts)
         % run MCMC sampling at this temperature
         [s_list,HS_list,tau,term_status_MCMC] = runMCMC_fixedT(costfun,T,s_set,mcmcOptions);
 
+        if (term_status_MCMC == 2 && talkative)
+            disp(' - premature end of MCMC. maxIter reached.')
+        end
         quit_cond_SA = (term_status_MCMC<0);
         
         % choose best sample (cost minimizer)

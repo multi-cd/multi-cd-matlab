@@ -19,7 +19,7 @@ function [s_list,HS_list,tau,term_status] = ...
 %   - term_status: reports by what termination condition the program exits
 % ------------------------------------------------------------------------
 
-% Copyright 2018 Min Hyeok Kim & Ji Hyun Bak
+% Copyright 2018-2020 Min Hyeok Kim & Ji Hyun Bak
 
 %% initialize
 
@@ -92,8 +92,8 @@ while 1
     end
 	
     % Stopping condition 2: iteration takes too long
-    if(cnt>maxIterMCMC) 
-        disp(' - premature end of MCMC. maxIter reached.')
+    if(cnt>maxIterMCMC)
+        % disp(' - premature end of MCMC. maxIter reached.')
         term_status = 2;
         break;
     end
