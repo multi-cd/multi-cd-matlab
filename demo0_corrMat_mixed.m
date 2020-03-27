@@ -14,7 +14,9 @@ s_set22 = [1*box; 2*box; 3*box; 4*box; 4*box; 4*box];
 scenario1 = {s_set11, s_set12};
 scenario2 = {s_set21, s_set22};
 
-scenarios = {scenario1, scenario2};
+scenario0 = scenario1; % equivalent
+
+scenarios = {scenario1, scenario2, scenario0};
 
 corr_mats = cell(numel(scenarios), 1);
 
@@ -32,7 +34,7 @@ for np = 1:numel(scenarios)
 
     for ns = 1:numel(scenario)
         
-        s_set = scenario1{ns};
+        s_set = scenario{ns};
         
         g = struct('mean', 3, 'std', 0);
         numDraw = 500;
@@ -63,10 +65,19 @@ end
 
 clf;
 
+color0 = [0.7 0.7 0.1; 0.3 0.3 0.05];
 color1 = [0.1 0.2 0.7];
 color2 = [0.7 0.2 0.1];
 
-subplot(2,3,1)
+subplot(3,3,2)
+biM = bsxfun(@eq,s_set11,s_set11') + bsxfun(@eq,s_set12,s_set12');
+imagesc(biM)
+colormap(gca, [1 1 1; color0])
+axis square
+title('population 0')
+set(gca, 'xtick', [], 'ytick', [])
+
+subplot(3,3,4)
 biM = bsxfun(@eq,s_set11,s_set11');
 imagesc(biM)
 colormap(gca, [1 1 1; color1])
@@ -74,7 +85,7 @@ axis square
 title('population 1-1')
 set(gca, 'xtick', [], 'ytick', [])
 
-subplot(2,3,2)
+subplot(3,3,5)
 biM = bsxfun(@eq,s_set12,s_set12');
 imagesc(biM)
 colormap(gca, [1 1 1; color1])
@@ -82,7 +93,7 @@ axis square
 title('population 1-2')
 set(gca, 'xtick', [], 'ytick', [])
 
-subplot(2,3,4)
+subplot(3,3,7)
 biM = bsxfun(@eq,s_set21,s_set21');
 imagesc(biM)
 colormap(gca, [1 1 1; color2])
@@ -90,7 +101,7 @@ axis square
 title('population 2-1')
 set(gca, 'xtick', [], 'ytick', [])
 
-subplot(2,3,5)
+subplot(3,3,8)
 biM = bsxfun(@eq,s_set22,s_set22');
 imagesc(biM)
 colormap(gca, [1 1 1; color2])
@@ -99,14 +110,22 @@ title('population 2-2')
 set(gca, 'xtick', [], 'ytick', [])
 
 
-subplot(2,3,3)
+subplot(3,3,3)
+corrMat = corr(x_list_all'); % re-sample
+imagesc(corrMat)
+axis square
+colormap(gca, flip(gray))
+title('correlation matrix 0')
+set(gca, 'xtick', [], 'ytick', [])
+
+subplot(3,3,6)
 imagesc(corr_mats{1})
 axis square
 colormap(gca, flip(gray))
 title('correlation matrix 1')
 set(gca, 'xtick', [], 'ytick', [])
 
-subplot(2,3,6)
+subplot(3,3,9)
 imagesc(corr_mats{2})
 axis square
 colormap(gca, flip(gray))
@@ -116,5 +135,5 @@ set(gca, 'xtick', [], 'ytick', [])
 
 set(findall(gcf, '-property', 'fontsize'), 'fontsize', 14)
 
-figname = 'fig_mixed_population.png';
-print(figname, '-dpng')
+figname = 'fig_mixed_population';
+print(figname, '-depsc')
