@@ -20,7 +20,7 @@ setpaths; % add path to custom functions
 
 % parameters for correlation matrix
 Ngen = 50; % system size
-config = 100; % initialization number
+config = 1000; % initialization number
 c_num_list = [10 2]; % number of clusters at each scale
 g_mean_list = [2 2]; % mean clustering strength
 g_std_list = [1 1]; % stdev of clustering strength
@@ -101,7 +101,7 @@ for nl = 1:numel(lambda_list)
 
     % plot solution
     Bmat = bsxfun(@eq,s_set(:),s_set(:)');
-    subplot(2,5, 7 + nl)
+    subplot(1,5, 2 + nl)
     imagesc(Bmat);
     colormap(gca,[[1 1 1];[0 0 0]])
     axis square
@@ -112,5 +112,5 @@ end
 
 set(findall(gcf, '-property', 'fontsize'), 'fontsize', 14)
 
-% figname = 'fig_test_synth.eps';
-% print(figname, '-depsc')
+figname = 'fig_test_synth';
+print(figname, '-dpng')
