@@ -15,7 +15,7 @@ function [s_set, HS, more_output] = runSimulatedAnnealing(costfun, N, opts)
     save_output = opts.save_output;
     
     talkative = true;
-    if isfield(opt, 'talkative')
+    if isfield(opts, 'talkative')
         talkative = opts.talkative;
     end
 
