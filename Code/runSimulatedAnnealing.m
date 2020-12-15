@@ -11,9 +11,13 @@ function [s_set, HS, more_output] = runSimulatedAnnealing(costfun, N, opts)
     saOptions = opts.SA;
     mcmcOptions = opts.MCMC;
     quenchOptions = opts.quench;
-
-    talkative = opts.talkative;
+    
     save_output = opts.save_output;
+    
+    talkative = true;
+    if isfield(opt, 'talkative')
+        talkative = opts.talkative;
+    end
 
 
     % ==== initial state generation
