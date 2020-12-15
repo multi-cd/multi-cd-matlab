@@ -37,6 +37,7 @@ function [s_set, HS, more_output] = runSimulatedAnnealing(costfun, N, opts)
     if save_output
         % save initial information
         save_initial_info(opts, s_init, costfun(s_init), T_init)
+    end
 
 
     % ==== simulated annealing
@@ -88,7 +89,7 @@ function [s_set, HS, more_output] = runSimulatedAnnealing(costfun, N, opts)
                 ', T=',num2str(T,'%1.1f'),', H=',num2str(HS,'%1.1f')]);
         end
 
-        if(quit_cond_SA)
+        if quit_cond_SA
             if talkative
                 disp('* single-domain solution reached -- force quitting SA.');
             end
@@ -97,7 +98,7 @@ function [s_set, HS, more_output] = runSimulatedAnnealing(costfun, N, opts)
 
         % update temperature
         T = T*c_cool; % cooling by a constant factor
-        if(T<T_stop)
+        if (T<T_stop)
             break
         end
 
@@ -114,10 +115,10 @@ function [s_set, HS, more_output] = runSimulatedAnnealing(costfun, N, opts)
     tic;
     [s_set,HS,HS_list,term_status] = runQuench_zeroT(costfun,s_set,quenchOptions);
     if talkative
-        if(term_status==1)
+        if (term_status==1)
             disp(' - bad sign: descending too far. trial limit reached.');
             %warning('maybe SA was not enough. check temperature schedule.');
-        elseif(term_status==2)
+        elseif (term_status==2)
             disp('Minimum reached successfully.');
         end
     end
@@ -126,6 +127,7 @@ function [s_set, HS, more_output] = runSimulatedAnnealing(costfun, N, opts)
     t_elap_total = t_elap_total + t_elap;
     if save_output
         save_quench_output(opts, HS_list, s_set, t_elap_total);
+    end
 
     more_output = struct('HS_list', HS_list);
 
