@@ -4,7 +4,13 @@ function [s_best, H_best] = call_MultiCD(Cmat, lambda, opts, num_repeat)
     % set handle for the cost function, given the correlation matrix Cmat
     costfun = @(svec) HS_calculation_all(Cmat,svec,lambda);
     
-    N = size(Cmat,1); % total number of loci  
+    % save all options to file
+    if opts.save_output
+        WriteYaml(fullfile(opts.out_path, 'configs_alg.yaml'), opts);
+        WriteYaml(fullfile(opts.out_path, 'configs_data.yaml'), data_opts);
+    end
+    
+    N = size(Cmat,1); % total number of loci
     
     % run simulated annealing starting from multiple initializations
     s_set_list = zeros(N, num_repeat);
