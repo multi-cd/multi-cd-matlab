@@ -90,7 +90,8 @@ function [s_set, HS, more_output] = runSimulatedAnnealing(costfun, N, opts)
 
         if talkative
             disp(['Step #',num2str(iter),...
-                ', T=',num2str(T,'%1.1f'),', H=',num2str(HS,'%1.1f')]);
+                ', T=',num2str(T,'%1.1f'),', H=',num2str(HS,'%1.1f'),...
+                ' (',num2str(t_elap,'%.1f'),'s)']);
         end
 
         if quit_cond_SA
