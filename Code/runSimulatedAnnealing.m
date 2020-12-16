@@ -12,32 +12,24 @@ function [s_set, HS, more_output] = runSimulatedAnnealing(costfun, N, opts)
     mcmcOptions = opts.MCMC;
     quenchOptions = opts.quench;
     
-    save_output = opts.save_output;
-    
+    % optional switches
+    save_output = false;
+    if isfield(opts, 'save_output')
+        save_output = opts.save_output;
+    end    
     talkative = true;
     if isfield(opts, 'talkative')
         talkative = opts.talkative;
     end
 
 
-    % ==== initial state generation
-
-    % randomly select the number of clusters
-    % (to allow sampling of highly clustered or highly fragmented solutions)
-    K_init = randperm(N,1);
-
-    % randomly assign each loci to a cluster
-    s_init = randsample(K_init,N,true);
-    s_init = renumber_clusters(s_init);
-
-    K_init = max(s_init); % fix in case some domains were never assigned
-
-
-    % ==== initial temperature decision
-
+    % ==== initialization
+    
+    [s_init, ~] = initial_state_generation(N);
     T_init = initial_temp_decision(costfun,s_init);
-    % disp(['initial temp. = ',num2str(T_init,'%1.1f')]);
-
+    if talkative
+        disp(['Initial T=',num2str(T_init,'%1.1f')]);
+    end
     if save_output
         % save initial information
         save_initial_info(opts, s_init, costfun(s_init), T_init)
@@ -49,9 +41,6 @@ function [s_set, HS, more_output] = runSimulatedAnnealing(costfun, N, opts)
     % initialize
     T = T_init;
     s_set = s_init;
-    if talkative
-        disp(['Initial T=',num2str(T,'%1.1f')]);
-    end
 
     c_cool = saOptions.c_cool;
     maxIterSA = saOptions.maxIterSA;
