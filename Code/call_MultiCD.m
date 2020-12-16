@@ -1,6 +1,10 @@
 function [s_best, H_best] = call_MultiCD(Cmat, lambda, opts, num_repeat)
     % Iterations for Multi-CD
     
+    if (~isnumeric(lambda) || isnan(lambda))
+        error('parameter lambda should be a single real number.');
+    end
+    
     % set handle for the cost function, given the correlation matrix Cmat
     costfun = @(svec) HS_calculation_all(Cmat,svec,lambda);
     
