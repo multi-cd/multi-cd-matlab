@@ -12,21 +12,18 @@ function [s_set, HS, more_output] = runSimulatedAnnealing(costfun, N, opts)
     mcmcOptions = opts.MCMC;
     quenchOptions = opts.quench;
     
-    % optional switches
-    save_output = false;
-    if isfield(opts, 'save_output')
-        save_output = opts.save_output;
-    end    
-    talkative = true;
-    if isfield(opts, 'talkative')
-        talkative = opts.talkative;
-    end
+    % optional settings
+    save_output = getFromStruct(opts, 'save_output', false);
+    talkative = getFromStruct(opts, 'talkative', true);
 
 
     % ==== initialization
     
+    const_a = getFromStruct(saOptions, 'const_a', 0.5);
+    T_init_range = getFromStruct(saOptions, 'T_init_range', []);
+    
     [s_init, ~] = initial_state_generation(N);
-    T_init = initial_temp_decision(costfun,s_init);
+    T_init = initial_temp_decision(costfun, s_init, const_a, T_init_range);
     if talkative
         disp(['Initial T=',num2str(T_init,'%1.1f')]);
     end
