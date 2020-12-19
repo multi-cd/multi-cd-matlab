@@ -29,13 +29,15 @@ function [s_set,HS,HS_list,term_status] = runQuench_zeroT(costfun,s_set_start,qu
     
     % initialize
     s_set = s_set_start;
+    HS = HS_start;
+
     cnt_acp = 0; % initialize acceptance counter
     term_status = 0; % termination status (0 means running)
     
     while (term_status == 0)
     
         % find a descent along the H landscape
-        [s_set, HS, found_descent] = next_descent(costfun, s_set);
+        [s_set, HS, found_descent] = next_descent(costfun, s_set, HS);
         
         % Stopping condition 2: no more descents after "enough" trials
         % NOTE: this is the "normal" termination, should have been condition 1...
@@ -59,7 +61,7 @@ function [s_set,HS,HS_list,term_status] = runQuench_zeroT(costfun,s_set_start,qu
     
 end
 
-function [s_set, HS, found_descent] = next_descent(costfun, s_set)
+function [s_set, HS, found_descent] = next_descent(costfun, s_set, HS)
     % sample the neighborhood and take the first descending move.
     
     found_descent = false;
