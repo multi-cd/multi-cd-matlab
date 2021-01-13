@@ -99,4 +99,4 @@ The demo scripts can be directly used to perform a Multi-CD analysis on real dat
     Feel free to adapt from `demo3` to set up the loop.
 
 The run time now depends on the size of your data, on your choice of temperature schedule, and/or how many different values of `lambda` you wish to try.
-
+See the [Configs](Configs) directory for a full list of parameters that was used for the main analysis.
