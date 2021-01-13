@@ -1,0 +1,12 @@
+# used for the main analysis
+
+lambda: null  # specified in the script
+SA:
+  const_a: 0.5
+  T_init_range: [2.0, .inf]
+  c_cool: 0.95
+  maxIterSA: 100
+  T_stop: 0.03
+MCMC: {minIterMCMC: 10000, maxIterMCMC: 500000, numSampAtEq: 100000}
+quench: {cnt_acp_limit: 100000}
+

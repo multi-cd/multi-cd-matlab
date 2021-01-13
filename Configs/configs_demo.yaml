@@ -1,0 +1,11 @@
+# as in the demo script 
+
+lambda: 1.0
+SA:
+  const_a: 0.5
+  c_cool: 0.8
+  maxIterSA: 100
+  T_stop: 0.1
+MCMC: {minIterMCMC: 100, maxIterMCMC: 5000, numSampAtEq: 500, checkEvery: 10000}
+quench: {cnt_acp_limit: 100000}
+

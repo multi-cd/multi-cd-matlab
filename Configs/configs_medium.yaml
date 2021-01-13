@@ -1,0 +1,12 @@
+# used for medium-weight runs, for some supplementary results
+
+lambda: null  # specified in the script
+SA:
+  const_a: 0.5
+  T_init_range: [2.0, .inf]
+  c_cool: 0.9
+  maxIterSA: 100
+  T_stop: 0.1
+MCMC: {minIterMCMC: 1000, maxIterMCMC: 50000, numSampAtEq: 5000, checkEvery: 10000}
+quench: {cnt_acp_limit: 10000}
+
